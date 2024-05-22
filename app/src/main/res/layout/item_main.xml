@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_screen_1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageMain"
+        android:layout_width="135dp"
+        android:layout_height="135dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:srcCompat="@drawable/pizza_1" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Классическая итальянская"
+        android:textColor="@color/text_title"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/imageMain"
+        app:layout_constraintTop_toTopOf="@+id/imageMain" />
+
+    <TextView
+        android:id="@+id/textDescription"
+        android:layout_width="171dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="5dp"
+        android:text="Вкусная классическая итальянская пицца с моцареллой и колбасой пепперони"
+        android:textColor="@color/text_description"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/textTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+
+    <TextView
+        android:id="@+id/textPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/border_text"
+        android:paddingStart="19dp"
+        android:paddingTop="7dp"
+        android:paddingEnd="19dp"
+        android:paddingBottom="7dp"
+        android:text="от 345 р"
+        android:textColor="@color/text_price"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textDescription" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f3f5f9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
