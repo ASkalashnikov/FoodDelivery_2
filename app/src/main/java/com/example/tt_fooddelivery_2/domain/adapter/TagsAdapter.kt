@@ -21,6 +21,7 @@ class TagsAdapter(private val interfaceTags: InterfaceTags) : RecyclerView.Adapt
             textTags.text = data.tags
 
             // Проверяем, была ли кнопка активная (default AppContext.positionActiveTags = 0)
+            // Делаем активную кнопку
             if (adapterPosition == AppContext.positionRcViewTags) {
                 textTags.setTextColor(getColor(textTags.context, R.color.text_tags_active))
                 cardViewTags.setCardBackgroundColor(getColor(cardViewTags.context, R.color.card_view_tags_active))

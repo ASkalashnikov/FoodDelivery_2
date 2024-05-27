@@ -1,4 +1,4 @@
-package com.example.tt_fooddelivery_2.data.retrofit
+package com.example.tt_fooddelivery_2.data.repository.storageapi.retrofit
 
 data class AllMenuData(
     val categories: List<Menu>

@@ -14,10 +14,13 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainHolder>() {
     class MainHolder(private val binding: ItemMainBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(mainModel: MainModel) = with(binding) {
-            textTitle.text = mainModel.title
-            textDescription.text = mainModel.description
-            textPrice.text = mainModel.price.toString()
-            Picasso.get().load(mainModel.image).into(imageMain)
+
+            if (mainModel.title.isNotEmpty()) {
+                textTitle.text = mainModel.title
+                textDescription.text = mainModel.description
+                textPrice.text = mainModel.price.toString()
+                Picasso.get().load(mainModel.image).into(imageMain)
+            }
         }
     }
 

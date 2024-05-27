@@ -1,12 +1,14 @@
 package com.example.tt_fooddelivery_2.presentation.activity
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tt_fooddelivery_2.R
-import com.example.tt_fooddelivery_2.data.retrofit.GetAllMenu
 import com.example.tt_fooddelivery_2.databinding.ActivityMainBinding
 import com.example.tt_fooddelivery_2.domain.adapter.BannerAdapter
 import com.example.tt_fooddelivery_2.domain.adapter.MainAdapter
@@ -16,7 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), TagsAdapter.InterfaceTags {
@@ -25,26 +26,36 @@ class MainActivity : AppCompatActivity(), TagsAdapter.InterfaceTags {
     private val adapterBanner = BannerAdapter()
     private val adapterTags = TagsAdapter(this@MainActivity)
     private val adapterMain = MainAdapter()
-    @Inject
-    lateinit var getAllMenu: GetAllMenu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Получения разрешение на местоположение
+        getLocationPermission()
+
+        // Получения местонахождения
+        mvvm.getCity()
+        initView()
+
         CoroutineScope(Dispatchers.Main).launch {
-            // Retrofit, загружаем данные с api
-            getAllMenu.execute()
             // Загружаем данные в LiveData
             mvvm.getBanner()
             mvvm.getTags()
-            mvvm.getMain()
 
             initRcViewBanner()
             initRcViewTags()
-            initRcViewMain()
             appBarScroll()
+
+            mvvm.getMain()
+            initRcViewMain()
+        }
+    }
+
+    private fun initView() {
+        mvvm.textCity.observe(this) { text ->
+            binding.includeToolbar.textCity.text = text
         }
     }
 
@@ -88,6 +99,23 @@ class MainActivity : AppCompatActivity(), TagsAdapter.InterfaceTags {
             includeToolbar.toolbarScreen1.setBackgroundColor(getColor(backgroundColor))
             appBar.setBackgroundColor(getColor(backgroundColor))
             rcViewTags.setBackgroundColor(getColor(backgroundColor))
+        }
+    }
+
+    private fun getLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            val permissions = arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            ActivityCompat.requestPermissions(this, permissions, 0)
         }
     }
 }
